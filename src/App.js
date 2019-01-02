@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import Button from './components/Button'
-import Search from './components/Search'
-import Table from './components/Table'
+import { Button, Search, Table } from './components'
 import { cache, getSearchResults } from './services/api'
 import './App.css'
 
