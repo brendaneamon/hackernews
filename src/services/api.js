@@ -8,7 +8,7 @@ const getSearchResults = async (term, currentPage) => {
     return Promise.resolve(cache.get(term))
   }
 
-  const searchEndpoint = `${BASE_PATH}/search?query=${term}&page=${currentPage}`;
+  const searchEndpoint = `${BASE_PATH}/search?query=${term}&page=${currentPage}`
   const response = await axios.get(searchEndpoint)
 
   const {

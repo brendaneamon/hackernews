@@ -6,6 +6,8 @@ import { cache, getSearchResults } from './services/api'
 import './App.css'
 
 class App extends Component {
+  _isMounted = false
+
   constructor(props) {
     super(props)
 
@@ -47,17 +49,26 @@ class App extends Component {
 
   fetchSearchTopStories(searchTerm, page = 0) {
     getSearchResults(searchTerm, page).then(result => {
-      this.setState({ result })
+      if (this._isMounted) {
+        this.setState({ result })
+      }
     }).catch(error => {
-      this.setState({ error })
-      console.error(error)
+      if (this._isMounted) {
+        this.setState({ error })
+        console.error(error)
+      }
     })
   }
 
   componentDidMount() {
+    this._isMounted = true
     const { searchTerm } = this.state
     this.setState({ cacheKey: searchTerm })
     this.fetchSearchTopStories(searchTerm)
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false
   }
 
   render() {
