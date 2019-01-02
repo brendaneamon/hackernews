@@ -1,28 +1,106 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Button from './components/Button'
+import Search from './components/Search'
+import Table from './components/Table'
+import { cache, getSearchResults } from './services/api'
+import './App.css'
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      cacheKey: null,
+      error: null,
+      result: null,
+      searchTerm: 'redux'
+    }
+
+    this.onSearchChange = this.onSearchChange.bind(this)
+    this.onSearchSubmit = this.onSearchSubmit.bind(this)
+    this.onDismiss = this.onDismiss.bind(this)
+    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this)
+  }
+
+  onDismiss(id) {
+    const { cacheKey } = this.state
+    const { hits, page } = cache.get(cacheKey)
+
+    const result = {
+      page,
+      hits: hits.filter(item => item.objectID !== id)
+    }
+    cache.set(cacheKey, result)
+    this.setState({ result })
+  }
+
+  onSearchChange(event) {
+    this.setState({ searchTerm: event.target.value })
+  }
+
+  onSearchSubmit(event) {
+    const { searchTerm } = this.state
+    this.setState({ cacheKey: searchTerm })
+    this.fetchSearchTopStories(searchTerm)
+    event.preventDefault()
+  }
+
+  fetchSearchTopStories(searchTerm, page = 0) {
+    getSearchResults(searchTerm, page).then(result => {
+      this.setState({ result })
+    }).catch(error => {
+      this.setState({ error })
+      console.error(error)
+    })
+  }
+
+  componentDidMount() {
+    const { searchTerm } = this.state
+    this.setState({ cacheKey: searchTerm })
+    this.fetchSearchTopStories(searchTerm)
+  }
+
   render() {
+    const { searchTerm, result, error } = this.state
+    let page = 0
+    if (result && result.page) {
+      page = +result.page
+    }
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="page">
+        <div className="interactions">
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}
+            onSubmit={this.onSearchSubmit}
           >
-            Learn React
-          </a>
-        </header>
+            {'Search '}
+          </Search>
+        </div>
+        {error &&
+          <p>
+            ERROR: problem getting data from Hacker News API
+          </p>
+        }
+        {result &&
+          <Table
+            list={result.hits}
+            onDismiss={this.onDismiss}
+          />
+        }
+        {result &&
+          <div className="interactions">
+            <Button
+              onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+            >
+              More
+            </Button>
+          </div>
+        }
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
