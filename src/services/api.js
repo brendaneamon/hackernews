@@ -20,8 +20,9 @@ const getSearchResults = async (term, currentPage) => {
     return Promise.reject(new Error(`Response code from Hacker News API: ${status}`))
   }
 
+  let result
   if (cache.has(term)) {
-    const result = {
+    result = {
       hits: [...cache.get(term).hits, ...data.hits],
       page: currentPage
     }
@@ -30,8 +31,9 @@ const getSearchResults = async (term, currentPage) => {
   }
 
   const { hits, page } = data
-  cache.set(term, { hits, page })
-  return { hits, page }
+  result = { hits, page }
+  cache.set(term, result)
+  return result
 }
 
 
