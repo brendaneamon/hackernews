@@ -1,3 +1,7 @@
+# Hacker News API search
+
+This is a simple sandbox React application that I have written while following along with Robin Wieruch's *The Road to Learn React*. For the most part, I have followed the approach outlined in the book; however, I have deviated from the prescribed course in some cases, for the sake of experimentation.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
