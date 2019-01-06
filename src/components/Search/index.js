@@ -1,22 +1,41 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Button from '../Button'
 
-const Search = ({ value, onChange, onSubmit, children }) =>
-  <form>
-    {children}
-    <input
-      type="text"
-      value={value}
-      onChange={onChange}
-    />
-    <Button
-      onClick={(e) => onSubmit(e)}
-      type="submit"
-    >
-      Submit
-    </Button>
-  </form>
+class Search extends Component {
+  componentDidMount() {
+    if (this.node) {
+      this.node.focus()
+    }
+  }
+
+  render() {
+    const {
+      value,
+      onChange,
+      onSubmit,
+      children
+    } = this.props
+
+    return (
+      <form>
+        {children}
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          ref={(node) => { this.node = node }}
+        />
+        <Button
+          onClick={(e) => onSubmit(e)}
+          type="submit"
+        >
+          Submit
+        </Button>
+      </form>
+    )
+  }
+}
 
 Search.propTypes = {
   value: PropTypes.string,
