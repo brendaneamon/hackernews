@@ -28,7 +28,8 @@ exports[`App has a valid snapshot 1`] = `
 
 exports[`Button has a valid snapshot 1`] = `
 <button
-  className=""
+  className="fake-class"
+  onClick={[Function]}
   type="button"
 >
   Button Text
@@ -39,6 +40,7 @@ exports[`Search has a valid snapshot 1`] = `
 <form>
   Search
   <input
+    onChange={[Function]}
     type="text"
   />
   <button

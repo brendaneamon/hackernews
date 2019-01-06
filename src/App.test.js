@@ -11,7 +11,6 @@ Enzyme.configure({ adapter : new Adapter() })
 let component
 let div
 let element
-let props
 let tree
 
 describe('App', () => {
@@ -29,15 +28,20 @@ describe('App', () => {
 })
 
 describe('Search', () => {
+  const searchProps = {
+    onChange() {},
+    onSubmit() {}
+  }
+
   it('renders without crashing', () => {
     div = document.createElement('div')
-    ReactDOM.render(<Search>Search</Search>, div)
+    ReactDOM.render(<Search { ...searchProps }>Search</Search>, div)
     ReactDOM.unmountComponentAtNode(div)
   })
 
   it('has a valid snapshot', () => {
     component = renderer.create(
-      <Search>Search</Search>
+      <Search { ...searchProps }>Search</Search>
     )
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
@@ -45,20 +49,22 @@ describe('Search', () => {
 })
 
 describe('Button', () => {
-  props = {
+  const btnProps = {
     className: 'fake-class',
     onClick() {}
   }
 
   it('renders without crashing', () => {
     div = document.createElement('div')
-    ReactDOM.render(<Button>Button Text</Button>, div)
+    ReactDOM.render(<Button { ...btnProps }>Button Text</Button>, div)
     ReactDOM.unmountComponentAtNode(div)
   })
 
   it('has a valid snapshot', () => {
     component = renderer.create(
-      <Button>Button Text</Button>
+      <Button { ...btnProps }>
+        Button Text
+      </Button>
     )
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
@@ -66,7 +72,7 @@ describe('Button', () => {
 
   it('has the expected type', () => {
     element = shallow(
-      <Button { ...props }>
+      <Button { ...btnProps }>
         Button Text
       </Button>
     )
@@ -76,7 +82,7 @@ describe('Button', () => {
 })
 
 describe('Table', () => {
-  props = {
+  const tableProps = {
     list: [
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'a' },
       { title: '2', author: '2', num_comments: 1, points: 2, objectID: 'b' }
@@ -85,13 +91,13 @@ describe('Table', () => {
 
   it('renders without crashing', () => {
     div = document.createElement('div')
-    ReactDOM.render(<Table { ...props } />, div)
+    ReactDOM.render(<Table { ...tableProps } />, div)
     ReactDOM.unmountComponentAtNode(div)
   })
 
   it('has a valid snapshot', () => {
     component = renderer.create(
-      <Table { ...props }/>
+      <Table { ...tableProps }/>
     )
     tree = component.toJSON()
     expect(tree).toMatchSnapshot()
@@ -99,7 +105,7 @@ describe('Table', () => {
 
   it('shows two items in the list', () => {
     element = shallow(
-      <Table { ...props }/>
+      <Table { ...tableProps }/>
     )
     const list = element.find('.table-row')
 
