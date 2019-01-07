@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { Button, Loading, Search, Table } from './components'
 import { cache, getSearchResults } from './services/api'
 import './App.css'
+
+library.add(faSpinner)
 
 class App extends Component {
   _isMounted = false
