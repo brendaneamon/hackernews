@@ -61,6 +61,16 @@
   border-bottom: .1rem solid #38bb6c;
 }
 
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.padding-2 {
+  padding: 2rem;
+}
+
 .width-10 {
   width: 10%;
 }

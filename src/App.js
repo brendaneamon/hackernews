@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Search, Table } from './components'
+import { Button, Loading, Search, Table } from './components'
 import { cache, getSearchResults } from './services/api'
 import './App.css'
 
@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       cacheKey: null,
       error: null,
+      loading: false,
       result: null,
       searchTerm: 'redux'
     }
@@ -55,11 +56,14 @@ class App extends Component {
         this.setState({ error })
         console.error(error)
       }
+    }).finally(() => {
+      this.setState({ loading: false })
     })
   }
 
   componentDidMount() {
     this._isMounted = true
+    this.setState({ loading: true })
     const { searchTerm } = this.state
     this.setState({ cacheKey: searchTerm })
     this.fetchSearchTopStories(searchTerm)
@@ -70,7 +74,7 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, result, error } = this.state
+    const { searchTerm, result, error, loading } = this.state
     let page = 0
     if (result && result.page) {
       page = +result.page
@@ -88,17 +92,20 @@ class App extends Component {
           </Search>
         </div>
         {error &&
-          <p>
+          <div className="centered-content padding-2">
             ERROR: problem getting data from Hacker News API
-          </p>
+          </div>
         }
-        {result &&
+        {result && !loading &&
           <Table
             list={result.hits}
             onDismiss={this.onDismiss}
           />
         }
-        {result &&
+        {loading && !error &&
+          <Loading />
+        }
+        {result && !loading &&
           <div className="interactions">
             <Button
               onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
