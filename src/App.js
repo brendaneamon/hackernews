@@ -106,11 +106,9 @@ class App extends Component {
             onDismiss={this.onDismiss}
           />
         }
-        {loading && !error &&
-          <Loading />
-        }
-        {result && !loading &&
-          <div className="interactions">
+        {loading && !error
+          ? <Loading />
+          : <div className="interactions">
             <Button
               onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
             >
