@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import { Button, Loading, Search, Table } from './components'
+import { Search, Table } from './components'
+import { ButtonWithLoading } from './higher-order-components'
 import { cache, getSearchResults } from './services/api'
 import './App.css'
 
@@ -106,16 +107,16 @@ class App extends Component {
             onDismiss={this.onDismiss}
           />
         }
-        {loading && !error
-          ? <Loading />
-          : <div className="interactions">
-            <Button
+        <div className="interactions">
+          {!error &&
+            <ButtonWithLoading
+              loading={loading}
               onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
             >
               More
-            </Button>
-          </div>
-        }
+            </ButtonWithLoading>
+          }
+        </div>
       </div>
     )
   }
