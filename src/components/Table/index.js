@@ -1,10 +1,47 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../Button'
+import { SORTS } from '../../utils'
+import { SortHeader } from '..';
 
-const Table = ({ list, onDismiss }) =>
+const Table = ({ list, sortKey, onSort, onDismiss }) =>
   <div className="table">
-    {list.map(item =>
+    <div className="table-header">
+      <span className="width-40">
+        <SortHeader
+          sortKey={'TITLE'}
+          onSort={onSort}
+        >
+          Title
+        </SortHeader>
+      </span>
+      <span className="width-30">
+        <SortHeader
+          sortKey={'AUTHOR'}
+          onSort={onSort}
+        >
+          Author
+        </SortHeader>
+      </span>
+      <span className="width-10">
+        <SortHeader
+          sortKey={'COMMENTS'}
+          onSort={onSort}
+        >
+          Comments
+        </SortHeader>
+      </span>
+      <span className="width-10">
+        <SortHeader
+          sortKey={'POINTS'}
+          onSort={onSort}
+        >
+          Points
+        </SortHeader>
+      </span>
+      <span className="width-10"></span>
+    </div>
+    {SORTS[sortKey](list).map(item =>
       <div key={item.objectID} className="table-row">
         <span className="width-40">
           <a href={item.url}>

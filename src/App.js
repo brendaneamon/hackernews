@@ -19,11 +19,13 @@ class App extends Component {
       error: null,
       loading: false,
       result: null,
-      searchTerm: 'redux'
+      searchTerm: 'redux',
+      sortKey: 'NONE'
     }
 
     this.onSearchChange = this.onSearchChange.bind(this)
     this.onSearchSubmit = this.onSearchSubmit.bind(this)
+    this.onSort = this.onSort.bind(this)
     this.onDismiss = this.onDismiss.bind(this)
     this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this)
   }
@@ -49,6 +51,10 @@ class App extends Component {
     this.setState({ cacheKey: searchTerm })
     this.fetchSearchTopStories(searchTerm)
     event.preventDefault()
+  }
+
+  onSort(sortKey) {
+    this.setState({ sortKey })
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
@@ -79,7 +85,13 @@ class App extends Component {
   }
 
   render() {
-    const { searchTerm, result, error, loading } = this.state
+    const {
+      searchTerm,
+      result,
+      error,
+      loading,
+      sortKey
+    } = this.state
     let page = 0
     if (result && result.page) {
       page = +result.page
@@ -104,6 +116,8 @@ class App extends Component {
         {result && !loading &&
           <Table
             list={result.hits}
+            sortKey={sortKey}
+            onSort={this.onSort}
             onDismiss={this.onDismiss}
           />
         }
