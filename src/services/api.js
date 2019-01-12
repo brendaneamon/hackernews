@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_PATH = 'http://hn.algolia.com/api/v1'
+const BASE_PATH = 'https://hn.algolia.com/api/v1'
 const cache = new Map()
 
 const getSearchResults = async (term, currentPage) => {
