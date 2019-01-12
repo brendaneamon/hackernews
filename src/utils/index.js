@@ -4,17 +4,25 @@ const SORTS = {
   NONE(list) {
     return list
   },
-  TITLE(list) {
-    return sortBy(list, 'title')
+  TITLE(list, reverse = false) {
+    return reverse
+      ? sortBy(list, 'title').reverse()
+      : sortBy(list, 'title')
   },
-  AUTHOR(list) {
-    return sortBy(list, 'author')
+  AUTHOR(list, reverse = false) {
+    return reverse
+      ? sortBy(list, 'author').reverse()
+      : sortBy(list, 'author')
   },
-  COMMENTS(list) {
-    return sortBy(list, 'num_comments').reverse()
+  COMMENTS(list, reverse = false) {
+    return reverse
+      ? sortBy(list, 'num_comments')
+      : sortBy(list, 'num_comments').reverse()
   },
-  POINTS(list) {
-    return sortBy(list, 'points').reverse()
+  POINTS(list, reverse = false) {
+    return reverse
+      ? sortBy(list, 'points')
+      : sortBy(list, 'points').reverse()
   }
 }
 

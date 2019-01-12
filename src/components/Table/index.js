@@ -4,7 +4,7 @@ import Button from '../Button'
 import { SORTS } from '../../utils'
 import { SortHeader } from '..';
 
-const Table = ({ list, sortKey, onSort, onDismiss }) =>
+const Table = ({ list, sortKey, isSortReverse, onSort, onDismiss }) =>
   <div className="table">
     <div className="table-header">
       <span className="width-40">
@@ -41,7 +41,7 @@ const Table = ({ list, sortKey, onSort, onDismiss }) =>
       </span>
       <span className="width-10"></span>
     </div>
-    {SORTS[sortKey](list).map(item =>
+    {SORTS[sortKey](list, isSortReverse).map(item =>
       <div key={item.objectID} className="table-row">
         <span className="width-40">
           <a href={item.url}>

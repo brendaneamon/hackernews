@@ -20,7 +20,8 @@ class App extends Component {
       loading: false,
       result: null,
       searchTerm: 'redux',
-      sortKey: 'NONE'
+      sortKey: 'NONE',
+      isSortReverse: false
     }
 
     this.onSearchChange = this.onSearchChange.bind(this)
@@ -54,7 +55,8 @@ class App extends Component {
   }
 
   onSort(sortKey) {
-    this.setState({ sortKey })
+    const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse
+    this.setState({ sortKey, isSortReverse })
   }
 
   fetchSearchTopStories(searchTerm, page = 0) {
@@ -90,7 +92,8 @@ class App extends Component {
       result,
       error,
       loading,
-      sortKey
+      sortKey,
+      isSortReverse
     } = this.state
     let page = 0
     if (result && result.page) {
@@ -117,6 +120,7 @@ class App extends Component {
           <Table
             list={result.hits}
             sortKey={sortKey}
+            isSortReverse={isSortReverse}
             onSort={this.onSort}
             onDismiss={this.onDismiss}
           />
