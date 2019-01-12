@@ -87,9 +87,6 @@ describe('Table', () => {
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'a' },
       { title: '2', author: '2', num_comments: 1, points: 2, objectID: 'b' }
     ],
-    sortKey: 'NONE',
-    isSortReverse: false,
-    onSort() {},
     onDismiss() {}
   }
 
