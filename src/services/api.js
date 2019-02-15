@@ -5,7 +5,7 @@ const cache = new Map()
 
 const getSearchResults = async (term, currentPage) => {
   if (cache.has(term) && cache.get(term).page >= currentPage) {
-    return Promise.resolve(cache.get(term))
+    return cache.get(term)
   }
 
   const searchEndpoint = `${BASE_PATH}/search?query=${term}&page=${currentPage}`
@@ -17,7 +17,7 @@ const getSearchResults = async (term, currentPage) => {
   } = response
 
   if (status !== 200 || (data && !Array.isArray(data.hits))) {
-    return Promise.reject(new Error(`Response code from Hacker News API: ${status}`))
+    throw new Error(`Response code from Hacker News API: ${status}`)
   }
 
   let result
