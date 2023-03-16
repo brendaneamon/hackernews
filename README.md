@@ -2,8 +2,6 @@
 
 This is a simple sandbox React application that I have written while following along with Robin Wieruch's *The Road to Learn React*. For the most part, I have followed the approach outlined in the book; however, I have deviated from the prescribed course in some cases, for the sake of experimentation.
 
-The app is deployed to Heroku, where its moniker is delightfully random: [thawing-wave-64692](https://thawing-wave-64692.herokuapp.com/).
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
